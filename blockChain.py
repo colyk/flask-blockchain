@@ -1,6 +1,7 @@
 import hashlib
 import json
 import os
+from time import time
 
 BLOCKCHAIN_DIR = os.curdir + '/blocks/'
 
@@ -9,7 +10,7 @@ def check_blocks_integrity():
     for i in range(2, int(get_next_block())):
         tmp ={'block' : '', 'result' : ''}
         cur_hash = json.load(open(BLOCKCHAIN_DIR + str(i) + '.json'))['hash']
-        prev_hash = hashlib.md5(open(BLOCKCHAIN_DIR + str(i-1) + '.json', 'rb').read()).hexdigest()
+        prev_hash = hashlib.sha256(open(BLOCKCHAIN_DIR + str(i-1) + '.json', 'rb').read()).hexdigest()
         if cur_hash != prev_hash:
             tmp['block'] = str(i-1)
             tmp['result'] = 'error'
@@ -27,7 +28,7 @@ def check_block(index):
     index_ = str(int(index) - 1)
     tmp ={'block' : '', 'result' : ''}
     cur_hash = json.load(open(BLOCKCHAIN_DIR + index + '.json'))['hash']
-    prev_hash = hashlib.md5(open(BLOCKCHAIN_DIR + index_ + '.json', 'rb').read()).hexdigest()
+    prev_hash = hashlib.sha256(open(BLOCKCHAIN_DIR + index_ + '.json', 'rb').read()).hexdigest()
     if cur_hash != prev_hash:
         tmp['block'] = index_
         tmp['result'] = 'error'
@@ -39,7 +40,7 @@ def check_block(index):
 
 def get_hash(file_name):
     with open(BLOCKCHAIN_DIR + file_name + '.json', 'rb') as file:
-        return hashlib.md5(file.read()).hexdigest()
+        return hashlib.sha256(file.read()).hexdigest()
 
 
 def get_next_block():
@@ -50,18 +51,33 @@ def get_next_block():
     return str(next_index)
 
 
-def write_block(text):
-    cur_index = int(get_next_block()) - 1
-    prev_block_hash = get_hash(str(cur_index))
-    data = {'text' : text,
-            'hash' : prev_block_hash}  
+def get_work_proof(file_name, difficulty=1):
+    with open(BLOCKCHAIN_DIR + file_name + '.json', 'rb') as file:
+        if str(hashlib.sha256(file.read()).hexdigest())[:difficulty] == '0'*difficulty:
+            return true
 
-    with open(BLOCKCHAIN_DIR +  get_next_block() + '.json', 'w') as file:
+
+
+def write_block(text):
+    cur_index = get_next_block()
+    prev_index = str(int(cur_index) - 1)
+    prev_block_hash = get_hash(prev_index)
+    cur_block_hash = get_hash(cur_index)
+    data = {'text' : text,
+            'prev_hash' : prev_block_hash,
+            'cur_hash' : cur_block_hash,
+            'timestamp' : time(),
+            'proof' : ' ',
+            'index' : cur_index
+            }  
+
+    with open(BLOCKCHAIN_DIR + cur_index + '.json', 'w') as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
 
-def main():
-    print(check_blocks_integrity())
-    print(check_block('2'))
 
 if __name__ == '__main__':
-    main()
+    for i in range(2,10):
+        write_block(str(i))
+    print(check_blocks_integrity())
+
+
