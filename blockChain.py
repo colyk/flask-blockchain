@@ -22,11 +22,17 @@ def check_blocks_integrity():
 
 
 def check_block(index):
-    index = str(int(index))
+    index = str(index)
     index_ = str(int(index) - 1)
     tmp = {'block' : '', 'result' : ''}
-    cur_hash = json.load(open(BLOCKCHAIN_DIR + index + '.json'))['prev_hash']
-    prev_hash = hashlib.sha256(open(BLOCKCHAIN_DIR + index_ + '.json', 'rb').read()).hexdigest()
+    try:
+        cur_hash = json.load(open(BLOCKCHAIN_DIR + index + '.json'))['prev_hash']
+    except Exception as e:
+        print(e)
+    try:
+        prev_hash = hashlib.sha256(open(BLOCKCHAIN_DIR + index_ + '.json', 'rb').read()).hexdigest()
+    except Exception as e:
+        print(e)    
     if cur_hash != prev_hash:
         tmp['block'] = index_
         tmp['result'] = 'error'
@@ -94,7 +100,8 @@ def write_block(text, make_proof=False):
 
 
 if __name__ == '__main__':
-    for i in range(2,10):
-        get_POW(str(i))
+    # for i in range(10):
+        # write_block(str(i),True)
     for i in range(2,10):
         print(check_block(str(i)))
+    print(check_blocks_integrity())
