@@ -1,0 +1,18 @@
+{% extends "base.html" %} {% block content %}
+<form action="{{ url_for('index') }}" method="POST">
+    <div class="form-group">
+        <label for="text">Your information</label>
+        <input type="text" class="form-control" id="text" placeholder="Put your text" name="text" value="{{ request.form.get('text', '') }}">
+    </div>
+
+    <div class="form-check">
+        <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" name="make_proof" value="{{ request.form.get('make_proof', '') }}" >
+      make proof
+    </label>
+    </div>
+        <br>
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Send</button>
+</form>
+<hr>
+{% endblock %}

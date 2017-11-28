@@ -6,45 +6,59 @@ from time import time
 BLOCKCHAIN_DIR = os.curdir + '/blocks/'
 
 def check_blocks_integrity():
-    result = []
+    result = list()
     for i in range(2, int(get_next_block())):
-        tmp ={'block' : '', 'result' : ''}
-        cur_hash = json.load(open(BLOCKCHAIN_DIR + str(i) + '.json'))['prev_hash']
-        prev_hash = hashlib.sha256(open(BLOCKCHAIN_DIR + str(i-1) + '.json', 'rb').read()).hexdigest()
-        if cur_hash != prev_hash:
-            tmp['block'] = str(i-1)
-            tmp['result'] = 'error'
-        else:
-            tmp['block'] = str(i-1)
+        prev_index = str(i-1)
+        cur_index = str(i)
+        tmp = {'block' : '', 'result' : ''}
+        try:
+            cur_hash = json.load(open(BLOCKCHAIN_DIR + cur_index + '.json'))['prev_hash']
+        except Exception as e:
+            print(e)
+        try:
+            prev_hash = hashlib.sha256(open(BLOCKCHAIN_DIR + prev_index + '.json', 'rb').read()).hexdigest()
+        except Exception as e:
+            print(e)
+        if cur_hash == prev_hash:
+            tmp['block'] = prev_index
             tmp['result'] = 'ok'
+        else:
+            tmp['block'] = prev_index
+            tmp['result'] = 'error'
         result.append(tmp)
     return result
 
 
 def check_block(index):
     index = str(index)
-    index_ = str(int(index) - 1)
+    prev_index = str(int(index) - 1)
     tmp = {'block' : '', 'result' : ''}
     try:
         cur_hash = json.load(open(BLOCKCHAIN_DIR + index + '.json'))['prev_hash']
     except Exception as e:
         print(e)
     try:
-        prev_hash = hashlib.sha256(open(BLOCKCHAIN_DIR + index_ + '.json', 'rb').read()).hexdigest()
+        prev_hash = hashlib.sha256(open(BLOCKCHAIN_DIR + prev_index + '.json', 'rb').read()).hexdigest()
     except Exception as e:
-        print(e)    
-    if cur_hash != prev_hash:
-        tmp['block'] = index_
-        tmp['result'] = 'error'
-    else:
-        tmp['block'] = index_
+        print(e)
+    if cur_hash == prev_hash:
+        tmp['block'] = prev_index
         tmp['result'] = 'ok'
+    else:
+        tmp['block'] = prev_index
+        tmp['result'] = 'error'
     return tmp
 
 
 def get_hash(file_name):
-    with open(BLOCKCHAIN_DIR + str(file_name) + '.json', 'rb') as file:
-        return hashlib.sha256(file.read()).hexdigest()
+    file_name = str(file_name)
+    if not file_name.endswith('.json'):
+        file_name += '.json'
+    try:
+        with open(BLOCKCHAIN_DIR + file_name, 'rb') as file:
+            return hashlib.sha256(file.read()).hexdigest()
+    except Exception as e:
+        print('File "'+file_name+'" does not exist!n', e)
 
 
 def get_next_block():
@@ -56,9 +70,8 @@ def get_next_block():
 
 
 def is_valid_proof(last_proof, proof, difficulty):
-    guess = f'{last_proof}{proof}'.encode() 
-    guess_hash = hashlib.sha256(guess).hexdigest() 
-
+    guess = f'{last_proof}{proof}'.encode()
+    guess_hash = hashlib.sha256(guess).hexdigest()
     return guess_hash[:difficulty] == '0' * difficulty
 
 
@@ -85,13 +98,12 @@ def write_block(text, make_proof=False):
     cur_index = get_next_block()
     prev_index = str(int(cur_index) - 1)
     prev_block_hash = get_hash(prev_index)
-    # cur_block_hash = get_hash(cur_index)
     data = {'text' : text,
             'prev_hash' : prev_block_hash,
             'timestamp' : time(),
-            'proof' : 0,
+            'proof' : -1,
             'index' : cur_index
-            }  
+            }
 
     with open(BLOCKCHAIN_DIR + cur_index + '.json', 'w') as file:
         json.dump(data, file, indent=4, ensure_ascii=False)

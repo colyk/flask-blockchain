@@ -2,6 +2,6 @@
 	"text" : "Genesis block",
     "hash": "",
     "timestamp": 0,
-    "proof": 0,
+    "proof": -1,
     "index": "1"
 }
