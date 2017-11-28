@@ -20,5 +20,12 @@ def index():
         return redirect(url_for('index'))
     return render_template('index.html')
 
+@app.route('/check', methods=[ 'POST'])
+def integrity():
+    results = blockChain.check_blocks_integrity()
+    if request.method == 'POST':
+        return render_template('index.html', results=results)
+    return render_template('index.html')
+    
 if __name__ == '__main__':
     app.run(debug=True)

@@ -11,8 +11,20 @@
       make proof
     </label>
     </div>
-        <br>
+    <br>
     <button type="submit" class="btn btn-primary btn-lg btn-block">Send</button>
 </form>
+<br>
+<hr> {% endblock %} {% block check %}
+<form action="{{ url_for('integrity') }}" method="POST">
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Check integrity</button>
+</form>
 <hr>
+<ul class="list-group">
+    {% for result in results %}
+    <li class="list-group-item"> Block {{result['block'] }} : {{result['result'] }}</li>
+    {% endfor %}</ul>
+    <br>
+    <br>
+    <br>
 {% endblock %}
