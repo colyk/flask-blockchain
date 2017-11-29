@@ -22,9 +22,25 @@
 <hr>
 <ul class="list-group">
     {% for result in results %}
-    <li class="list-group-item"> Block {{result['block'] }} : {{result['result'] }}</li>
+    <li class="list-group-item"> Block {{result['block'] }} : {% if result['result'] == 'ok' %}
+        <i>Okey!</i> {% endif %} {% if result['result'] == 'error' %}
+        <strong>    corrupted!</strong> {% endif %} {% if result['proof'] != -1 %}
+        <i>mined!</i> {% endif %} {% if result['proof'] == -1 %}
+        <strong>not mined!</strong> {% endif %}
+
+    </li>
     {% endfor %}</ul>
-    <br>
-    <br>
-    <br>
-{% endblock %}
+<br> {% endblock %}
+<hr> {% block mining %}
+<form action="{{ url_for('mining') }}" method="POST">
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Mining</button>
+</form>
+{% if querry %}
+<hr>
+<div class="alert alert-success" role="alert">
+    <strong>Well done!</strong> You successfully mined!
+</div>
+<hr><br> {% endif %}
+
+
+<br><br><br> {% endblock %}

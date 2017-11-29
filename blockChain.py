@@ -7,45 +7,55 @@ BLOCKCHAIN_DIR = os.curdir + '/blocks/'
 
 def check_blocks_integrity():
     result = list()
+    cur_proof = - 1
     for i in range(2, int(get_next_block())):
         prev_index = str(i-1)
         cur_index = str(i)
-        tmp = {'block' : '', 'result' : ''}
+        tmp = {'block' : '', 'result' : '', 'proof': ''}
         try:
-            cur_hash = json.load(open(BLOCKCHAIN_DIR + cur_index + '.json'))['prev_hash']
+            file_dict = json.load(open(BLOCKCHAIN_DIR + cur_index + '.json'))
+            cur_hash = file_dict['prev_hash']
+            cur_proof = file_dict['proof']
         except Exception as e:
             print(e)
+
         try:
             prev_hash = hashlib.sha256(open(BLOCKCHAIN_DIR + prev_index + '.json', 'rb').read()).hexdigest()
         except Exception as e:
             print(e)
+
+        tmp['block'] = prev_index
+        tmp['proof'] = cur_proof
         if cur_hash == prev_hash:
-            tmp['block'] = prev_index
             tmp['result'] = 'ok'
         else:
-            tmp['block'] = prev_index
             tmp['result'] = 'error'
         result.append(tmp)
     return result
 
 
 def check_block(index):
-    index = str(index)
+    cur_index = str(index)
     prev_index = str(int(index) - 1)
-    tmp = {'block' : '', 'result' : ''}
+    cur_proof = - 1
+    cur_hash = 0
+    prev_hash =0
+    tmp = {'block' : '', 'result' : '', 'proof': ''}
     try:
-        cur_hash = json.load(open(BLOCKCHAIN_DIR + index + '.json'))['prev_hash']
+        file_dict = json.load(open(BLOCKCHAIN_DIR + cur_index + '.json'))
+        cur_hash = file_dict['prev_hash']
+        cur_proof = file_dict['proof']
     except Exception as e:
         print(e)
     try:
         prev_hash = hashlib.sha256(open(BLOCKCHAIN_DIR + prev_index + '.json', 'rb').read()).hexdigest()
     except Exception as e:
         print(e)
+    tmp['block'] = prev_index
+    tmp['proof'] = cur_proof
     if cur_hash == prev_hash:
-        tmp['block'] = prev_index
         tmp['result'] = 'ok'
     else:
-        tmp['block'] = prev_index
         tmp['result'] = 'error'
     return tmp
 

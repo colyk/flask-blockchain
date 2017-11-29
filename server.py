@@ -26,6 +26,16 @@ def integrity():
     if request.method == 'POST':
         return render_template('index.html', results=results)
     return render_template('index.html')
-    
+
+@app.route('/mining', methods=[ 'POST'])
+def mining():
+    if request.method == 'POST':
+        max_index = int(blockChain.get_next_block())
+
+        for i in range(2, max_index):
+            blockChain.get_POW(i)
+        return render_template('index.html', querry=max_index)
+    return render_template('index.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

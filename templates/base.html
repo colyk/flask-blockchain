@@ -9,9 +9,10 @@
 
     <title>BlockChain</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
 </head>
 
-<body>
+<body >
     <div class="content container">
         <div class="row">
             <div class="col-lg-8 mx-auto mt-5">
@@ -47,7 +48,22 @@
     </div>
 
 
+    <div class="content container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto mt-5">
+                <h3>Mining <span class="badge badge-secondary">just try...</span></h3>
+            </div>
+        </div>
+    </div>
+    <div class="content container">
+        <div class="row">
+            <div class="col-lg-6 mx-auto mt-5">
+                {% block mining %}
 
+                {% endblock %}
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
