@@ -5,11 +5,20 @@ Blockchain with Flask
 
 A blockchain –  is a continuously growing list of records, called blocks, which are linked and secured using cryptography hash. Each block typically contains a hash pointer as a link to a previous block and a timestamp. By design, blockchains are inherently resistant to modification of the data. For getting hash mostly using SHA-256.
 
-Requirements
+How to run project
 ============
 
-* Flask
+```
+pip install Flask
 
+git clone https://github.com/colyk/flask-blockchain.git
+
+cd flask-blockchain
+
+python server.py
+```
+
+Now head over to http://127.0.0.1:5000/, and you should see main page of blockchain, where you can add new block, check blocks integrity and mined blocks using POW algorithm.
 
 POW
 ===
