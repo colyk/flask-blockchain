@@ -1,13 +1,26 @@
-Blockchain with Flask
-=======================
+# Blockchain
+Blockchain simulation with a web interface on Flask.
 
-## What is blockchain?
+## How it works
+### Test 1
+<img src="https://i.ibb.co/TR3XyJW/photo-2023-05-01-14-51-24.jpg" alt="" height="400">
 
-**A blockchain** –  is a continuously growing list of records, called blocks, which are linked and secured using cryptography hash. Each block typically contains a hash pointer as a link to a previous block and a timestamp. By design, blockchains are inherently resistant to modification of the data. For getting hash used _SHA-256_
+### Test 2
+<img src="https://i.ibb.co/27q9Ccx/photo-2023-05-01-14-51-26.jpg" alt="" height="400">
 
-## What is POW
+### Test 3
+<img src="https://i.ibb.co/RH1cFcS/photo-2023-05-01-14-51-27.jpg" alt="" height="400">
 
-**POW** _( proof of work)_ is a piece of data which is difficult (costly, time-consuming) to produce but easy for others to verify and which satisfies certain requirements. Producing a proof of work can be a random process with low probability so that a lot of trial and error is required on average before a valid proof of work is generated. Bitcoin uses the Hashcash proof of work system.
+### Test 4
+<img src="https://i.ibb.co/vBgJWcK/photo-2023-05-01-14-51-28.jpg" alt="" height="400">
+
+### What is blockchain?
+
+**Blockchain** –  is a continuously growing list of records, called blocks, which are linked and secured using cryptography hash. Each block typically contains a hash pointer as a link to a previous block and a timestamp. By design, blockchains are inherently resistant to modification of the data. For getting hash used _SHA-256_
+
+### What is POW
+
+**POW** _(proof of work)_ is a piece of data which is difficult (costly, time-consuming) to produce but easy for others to verify and which satisfies certain requirements. Producing a proof of work can be a random process with low probability so that a lot of trial and error is required on average before a valid proof of work is generated. Bitcoin uses the Hashcash proof of work system.
 
 ## How to run
 
