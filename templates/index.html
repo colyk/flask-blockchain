@@ -1,15 +1,16 @@
 {% extends "base.html" %} {% block content %}
 <form action="{{ url_for('index') }}" method="POST">
     <div class="form-group">
-        <label for="text">Your information</label>
-        <input type="text" class="form-control" id="text" placeholder="Put your text" name="text" value="{{ request.form.get('text', '') }}">
+        <label for="text">Your data</label>
+        <input type="text" class="form-control" id="text" placeholder="Put your text" name="text"
+            value="{{ request.form.get('text', '') }}" required>
     </div>
 
     <div class="form-check">
         <label class="form-check-label">
-            <input type="checkbox" class="form-check-input" name="make_proof" value="{{ request.form.get('make_proof', '') }}" >
-      make proof
-    </label>
+            <input type="checkbox" class="form-check-input" name="make_proof">
+            Add POW
+        </label>
     </div>
     <br>
     <button type="submit" class="btn btn-primary btn-lg btn-block">Send</button>
@@ -24,16 +25,17 @@
     {% for result in results %}
     <li class="list-group-item"> Block {{result['block'] }} : {% if result['result'] == 'ok' %}
         <i>Okey!</i> {% endif %} {% if result['result'] == 'error' %}
-        <strong>    corrupted!</strong> {% endif %} {% if result['proof'] != -1 %}
-        <i>mined!</i> {% endif %} {% if result['proof'] == -1 %}
-        <strong>not mined!</strong> {% endif %}
+        <strong> corrupted!</strong> {% endif %} {% if result['proof'] != -1 %}
+        <i>it is mined!</i> {% endif %} {% if result['proof'] == -1 %}
+        <strong>it is not mined!</strong> {% endif %}
 
     </li>
-    {% endfor %}</ul>
+    {% endfor %}
+</ul>
 <br> {% endblock %}
 <hr> {% block mining %}
 <form action="{{ url_for('mining') }}" method="POST">
-    <button type="submit" class="btn btn-primary btn-lg btn-block">Mining</button>
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Mine</button>
 </form>
 {% if querry %}
 <hr>
