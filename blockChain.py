@@ -14,7 +14,7 @@ def check_blocks_integrity():
         cur_index = str(i)
         tmp = {"block": "", "result": "", "proof": ""}
         try:
-            file_dict = json.load(open(BLOCKCHAIN_DIR + cur_index + ".json"))
+            file_dict = json.load(open(f"{BLOCKCHAIN_DIR}{cur_index}.json"))
             cur_hash = file_dict["prev_hash"]
             cur_proof = file_dict["proof"]
         except Exception as e:
@@ -122,15 +122,15 @@ def write_block(text, make_proof=False):
         "index": cur_index,
     }
 
-    with open(BLOCKCHAIN_DIR + cur_index + ".json", "w") as file:
+    with open(f"{BLOCKCHAIN_DIR}{cur_index}.json", "w") as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
     if make_proof:
         get_POW(str(cur_index))
 
 
 if __name__ == "__main__":
-    for i in range(10):
-        write_block(str(i), True)
-    for i in range(2, 10):
-        print(check_block(str(i)))
+    for data in range(10):
+        write_block(str(data), True)
+    for data in range(2, 10):
+        print(check_block(str(data)))
     print(check_blocks_integrity())

@@ -2,17 +2,17 @@
 Blockchain simulation with a web interface on Flask.
 
 ## How it works
-### Test 1
-<img src="https://i.ibb.co/TR3XyJW/photo-2023-05-01-14-51-24.jpg" alt="" height="400">
+### Main view
+<img src="https://i.ibb.co/TR3XyJW/photo-2023-05-01-14-51-24.jpg" alt="" height="500">
 
-### Test 2
-<img src="https://i.ibb.co/27q9Ccx/photo-2023-05-01-14-51-26.jpg" alt="" height="400">
+### Checking the integrity of 4 newly created blocks
+<img src="https://i.ibb.co/27q9Ccx/photo-2023-05-01-14-51-26.jpg" alt="" height="500">
 
-### Test 3
-<img src="https://i.ibb.co/RH1cFcS/photo-2023-05-01-14-51-27.jpg" alt="" height="400">
+### All blocks are mined
+<img src="https://i.ibb.co/RH1cFcS/photo-2023-05-01-14-51-27.jpg" alt="" height="500">
 
-### Test 4
-<img src="https://i.ibb.co/vBgJWcK/photo-2023-05-01-14-51-28.jpg" alt="" height="400">
+### The last block is manually corrupted in `./blocks` and new block is added
+<img src="https://i.ibb.co/vBgJWcK/photo-2023-05-01-14-51-28.jpg" alt="" height="500">
 
 ### What is blockchain?
 
